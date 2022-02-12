@@ -183,6 +183,7 @@ const updateDataAndDisplay = async (locationObj) => {
 	const weatherJson = await getWeatherFromCoords(locationObj);
 
 	console.log(weatherJson);
+
 	//this is instead of browser location
 	const myCoordsObj = {
 		lat: weatherJson.lat,
