@@ -1,5 +1,5 @@
 export const setLocationObject = (locationObj, coordsObj) => {
-	const { lat, lon, name, unit, lang } = coordsObj;
+	const { lat, lon, name, unit, lang, posname } = coordsObj;
 	locationObj.setLat(lat);
 	locationObj.setLon(lon);
 	locationObj.setName(name);
@@ -8,6 +8,9 @@ export const setLocationObject = (locationObj, coordsObj) => {
 	}
 	if (lang) {
 		locationObj.setLang(lang);
+	}
+	if (posname) {
+		locationObj.setPosName(posname);
 	}
 };
 

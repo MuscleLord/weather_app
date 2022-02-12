@@ -5,6 +5,7 @@ export default class CurrentLocation {
 		this._lon = null;
 		this._unit = "metric";
 		this._lang = "sv";
+		this._posname = null;
 	}
 
 	//getters
@@ -23,6 +24,9 @@ export default class CurrentLocation {
 	getLang() {
 		return this._lang;
 	}
+	getPosName() {
+		return this._posname;
+	}
 
 	//setters
 	setName(name) {
@@ -39,6 +43,9 @@ export default class CurrentLocation {
 	}
 	setLang(lang) {
 		this._lang = lang;
+	}
+	setPosName(posName) {
+		this._posname = posName;
 	}
 
 	toggleUnit() {

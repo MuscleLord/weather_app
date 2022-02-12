@@ -33,6 +33,7 @@ const initApp = () => {
 	//set up
 	setPlaceholderText();
 	//load weather
+	defaultWeather();
 	loadWeather();
 	console.log("App Initiated");
 };
@@ -48,15 +49,16 @@ const getGeoWeather = (event) => {
 			console.log("get location clicked");
 		}
 	}
-	if (navigator.geolocation) {
+	if (!navigator.geolocation) {
 		//geoError();
 
 		//this is instead of browser location
 		console.log("success");
 		const myCoordsObj = {
-			name: "Lat:59.3076596 Long:14.1106624",
+			name: "Kristinehamn, SE",
 			lat: 59.3076596,
-			lon: 14.1106624
+			lon: 14.1106624,
+			posname: "Lat:59.30 • Long:14.11"
 		};
 		setLocationObject(currentLoc, myCoordsObj);
 		updateDataAndDisplay(currentLoc);
@@ -105,7 +107,8 @@ const displayHomeLocationWeather = (home) => {
 			lat: locationJson.lat,
 			lon: locationJson.lon,
 			name: locationJson.name,
-			unit: locationJson.unit
+			unit: locationJson.unit,
+			posname: locationJson.posname
 		};
 		setLocationObject(currentLoc, myCoordsObj);
 		updateDataAndDisplay(currentLoc);
@@ -121,7 +124,8 @@ const savedLocation = () => {
 			lat: currentLoc.getLat(),
 			lon: currentLoc.getLon(),
 			unit: currentLoc.getUnit(),
-			lang: currentLoc.getLang()
+			lang: currentLoc.getLang(),
+			posname: currentLoc.getPosName()
 		};
 		localStorage.setItem("defaultWeatherLocation", JSON.stringify(location));
 		updateScreenReaderConfirmation(
@@ -141,6 +145,35 @@ const refreshWeather = () => {
 	const refreshIcon = document.querySelector(".fa-sync-alt");
 	addSpinner(refreshIcon);
 	updateDataAndDisplay(currentLoc);
+};
+
+const defaultWeather = async (event) => {
+	const coordsData = await getCoordsFromApi(
+		"Kristinehamn",
+		currentLoc.getUnit(),
+		currentLoc.getLang()
+	);
+	if (coordsData) {
+		if (coordsData.cod === 200) {
+			// success
+			// work with api data
+			const myCoordsObj = {
+				lat: coordsData.coord.lat,
+				lon: coordsData.coord.lon,
+				name: coordsData.sys.country
+					? `${coordsData.name}, ${coordsData.sys.country}`
+					: coordsData.name,
+				posname: `Lat:${coordsData.coord.lat} Lon:${coordsData.coord.lon}`
+			};
+			setLocationObject(currentLoc, myCoordsObj);
+			updateDataAndDisplay(currentLoc);
+		} else {
+			displayApiError(coordsData);
+		}
+	} else {
+		displayError("Connection Error", "Connection Error");
+	}
+	console.log("Default loaded");
 };
 
 const submitNewLocation = async (event) => {
@@ -165,7 +198,8 @@ const submitNewLocation = async (event) => {
 				lon: coordsData.coord.lon,
 				name: coordsData.sys.country
 					? `${coordsData.name}, ${coordsData.sys.country}`
-					: coordsData.name
+					: coordsData.name,
+				posname: `Lat:${coordsData.coord.lat} Lon:${coordsData.coord.lon}`
 			};
 			setLocationObject(currentLoc, myCoordsObj);
 			updateDataAndDisplay(currentLoc);
@@ -181,14 +215,14 @@ const updateDataAndDisplay = async (locationObj) => {
 	//console.log(locationObj);
 	//	updateWeatherLocationHeader(locationObj._name);
 	const weatherJson = await getWeatherFromCoords(locationObj);
-
+	//console.log(weatherJson);
 	//this is instead of browser location
-	const myCoordsObj = {
+	/* 	const myCoordsObj = {
 		lat: weatherJson.lat,
 		lon: weatherJson.lon,
-		name: `Lat:${weatherJson.lat} Long:${weatherJson.lon}`
+		name: `Lat:${weatherJson.lat} Lon:${weatherJson.lon}`
 	};
-	setLocationObject(currentLoc, myCoordsObj);
+	setLocationObject(currentLoc, myCoordsObj); */
 
 	if (weatherJson) updateDisplay(weatherJson, locationObj);
 };

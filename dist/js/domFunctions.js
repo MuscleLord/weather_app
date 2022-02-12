@@ -35,9 +35,12 @@ const toProperCase = (text) => {
 	return properWords.join(" ");
 };
 
-export const updateWeatherLocationHeader = (message) => {
+export const updateWeatherLocationHeader = (messages) => {
+	const message =
+		typeof messages === "string" ? messages : messages.getPosName();
 	const h1 = document.getElementById("currentForecast__location");
-	if (message.indexOf("Lat:") !== -1 && message.indexOf("Long:") !== -1) {
+	const h2 = document.getElementById("currentForecast__city");
+	if (message.indexOf("Lat:") !== -1 && message.indexOf("Lon:") !== -1) {
 		const msgArray = message.split(" ");
 		const mapArray = msgArray.map((msg) => {
 			return msg.replace(":", ": ");
@@ -48,11 +51,18 @@ export const updateWeatherLocationHeader = (message) => {
 				: mapArray[0].slice(0, 11);
 		const lon =
 			mapArray[1].indexOf("-") === -1
-				? mapArray[1].slice(0, 11)
-				: mapArray[1].slice(0, 12);
+				? mapArray[1].slice(0, 10)
+				: mapArray[1].slice(0, 11);
 		h1.textContent = `${lat} • ${lon}`;
+		h2.textContent = messages.getName();
 	} else {
-		h1.textContent = message;
+		if (typeof messages === "string") {
+			h1.textContent = "";
+			h2.textContent = message;
+		} else {
+			h1.textContent = message;
+			h2.textContent = messages.getName();
+		}
 	}
 };
 
@@ -71,7 +81,7 @@ export const updateDisplay = (weatherJson, locationObj) => {
 		locationObj
 	);
 	updateScreenReaderConfirmation(screenReaderWeather);
-	updateWeatherLocationHeader(locationObj.getName());
+	updateWeatherLocationHeader(locationObj);
 
 	//current condition
 	const ccArray = createCurrentConditionsDivs(

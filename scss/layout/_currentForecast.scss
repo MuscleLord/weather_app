@@ -8,11 +8,21 @@
         font-size: 1.3rem;
       }
     }
+    .currentForecast__city {
+      font-size: 1.5rem;
+      font-weight: normal;
+      text-align: center;
+      margin-bottom: 1rem;
+      @include mq(390px) {
+        font-size: 2rem;
+      }
+    
+    }
   
     .currentForecast__conditions {
       width: 100%;
       font-size: 1.1rem;
-      margin: auto auto 2rem;
+      margin: auto auto 1rem;
       display: grid;
       @include mq(375px) {
         font-size: 1.3rem;
@@ -81,12 +91,12 @@
         @include flexCenter;
         grid-row: 4 / span 1;
         grid-column: 1 / span 4;
-        padding-top: 0.5rem;
+        padding-top: 0.1rem;
         @include mqMaxWMinH(1024px, 650px) {
-          margin-top: 1.5rem;
+          margin-top: 0.2rem;
         }
         @include mqh(1080px) {
-          margin-top: 1.5rem;
+          margin-top: 0.5rem;
         }
       }
   
