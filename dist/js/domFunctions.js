@@ -209,7 +209,7 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 	);
 	//make sure the temp fontsize make room for more characters when its cold
 	if (`${roundNum(currentWeather.temp * 10) / 10}`.length >= 4) {
-		temp.style.fontSize = "6rem";
+		temp.style.fontSize = "5.6rem";
 	}
 
 	console.log(
