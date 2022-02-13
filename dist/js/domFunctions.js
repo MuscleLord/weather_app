@@ -212,10 +212,6 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 		temp.style.fontSize = "5.6rem";
 	}
 
-	console.log(
-		roundNum(currentWeather.temp * 10) / 10,
-		`${roundNum(currentWeather.temp * 10) / 10}`.length
-	);
 	return [icon, temp, desc, feels, maxTemp, minTemp, humidity, wind];
 };
 
@@ -369,6 +365,9 @@ const creatDailyForecastIcon = (icon, altText) => {
 		img.src = `https://openweathermap.org/img/wn/${icon}.png`;
 	} else {
 		img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+	}
+	if (getWeatherClass(icon) === "snow") {
+		img.style.filter = "invert(100) brightness(150)";
 	}
 	img.alt = altText;
 
