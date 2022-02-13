@@ -209,8 +209,12 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 		"wind",
 		`Vind ${currentWeather.wind_speed} ${windUnit}`
 	);
+
 	//make sure the temp fontsize make room for more characters when its cold
-	if (`${roundNum(currentWeather.temp * 10) / 10}`.length >= 4) {
+	if (
+		`${roundNum(currentWeather.temp * 10) / 10}`.length >= 4 &&
+		unit === "metric"
+	) {
 		temp.style.fontSize = "5.6rem";
 	}
 

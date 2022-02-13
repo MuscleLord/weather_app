@@ -178,8 +178,8 @@ const defaultWeather = async (event) => {
 
 const submitNewLocation = async (event) => {
 	event.preventDefault();
-	const text = document.getElementById("searchBar__text").value;
-	const entryText = cleanText(text);
+	let text = document.getElementById("searchBar__text");
+	const entryText = cleanText(text.value);
 	if (!entryText.length) return;
 	const locationIcon = document.querySelector(".fa-search");
 	addSpinner(locationIcon);
@@ -209,6 +209,7 @@ const submitNewLocation = async (event) => {
 	} else {
 		displayError("Connection Error", "Connection Error");
 	}
+	text.value = "";
 };
 
 const updateDataAndDisplay = async (locationObj) => {
