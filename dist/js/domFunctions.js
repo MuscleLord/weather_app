@@ -207,6 +207,15 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 		"wind",
 		`Vind ${currentWeather.wind_speed} ${windUnit}`
 	);
+	//make sure the temp fontsize make room for more characters when its cold
+	if (`${roundNum(currentWeather.temp * 10) / 10}`.length >= 4) {
+		temp.style.fontSize = "6rem";
+	}
+
+	console.log(
+		roundNum(currentWeather.temp * 10) / 10,
+		`${roundNum(currentWeather.temp * 10) / 10}`.length
+	);
 	return [icon, temp, desc, feels, maxTemp, minTemp, humidity, wind];
 };
 
