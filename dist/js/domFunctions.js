@@ -126,6 +126,8 @@ const getWeatherClass = (icon) => {
 	const firstTwoChars = icon.slice(0, 2);
 	const lastChar = icon.slice(2);
 	const weatherLookup = {
+		"01": "clear",
+		"02": "cloudy",
 		"09": "snow",
 		10: "rain",
 		11: "rain",
@@ -367,7 +369,14 @@ const creatDailyForecastIcon = (icon, altText) => {
 		img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 	}
 	if (getWeatherClass(icon) === "snow") {
-		img.style.filter = "invert(100) brightness(150)";
+		img.style.filter = "invert(100%) brightness(150%)";
+	}
+	if (
+		getWeatherClass(icon) === "clear" ||
+		getWeatherClass(icon) === "rain" ||
+		getWeatherClass(icon) === "cloudy"
+	) {
+		img.style.filter = "hue-rotate(47deg) brightness(130%)";
 	}
 	img.alt = altText;
 
