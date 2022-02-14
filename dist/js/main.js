@@ -33,7 +33,8 @@ const initApp = () => {
 	//set up
 	setPlaceholderText();
 	//load weather
-	defaultWeather();
+	//defaultWeather();
+
 	loadWeather();
 	console.log("App Initiated");
 };
@@ -50,20 +51,20 @@ const getGeoWeather = (event) => {
 		}
 	}
 	if (!navigator.geolocation) {
-		//geoError();
+		geoError();
 
 		//this is instead of browser location
 		console.log("success");
-		const myCoordsObj = {
+		/* 		const myCoordsObj = {
 			name: "Kristinehamn, SE",
 			lat: 59.3076596,
 			lon: 14.1106624,
 			posname: "Lat:59.30 • Long:14.11"
 		};
 		setLocationObject(currentLoc, myCoordsObj);
-		updateDataAndDisplay(currentLoc);
+		updateDataAndDisplay(currentLoc); */
 	}
-	//navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+	navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
 };
 
 const geoError = (errObj) => {
@@ -72,10 +73,12 @@ const geoError = (errObj) => {
 };
 
 const geoSuccess = (position) => {
+	console.log("POS OBJ:", position);
+
 	const myCoordsObj = {
 		lat: position.coords.latitude,
 		lon: position.coords.longitude,
-		name: `Lat:${position.coords.latitude} Long:${position.coords.longitude}`
+		posname: `Lat:${position.coords.latitude} Lon:${position.coords.longitude}`
 	};
 	setLocationObject(currentLoc, myCoordsObj);
 	//console.log(currentLoc);
@@ -216,12 +219,15 @@ const updateDataAndDisplay = async (locationObj) => {
 	//console.log(locationObj);
 	//	updateWeatherLocationHeader(locationObj._name);
 	const weatherJson = await getWeatherFromCoords(locationObj);
-	//console.log(weatherJson);
+	console.log(weatherJson);
 	//this is instead of browser location
 	/* 	const myCoordsObj = {
 		lat: weatherJson.lat,
 		lon: weatherJson.lon,
-		name: `Lat:${weatherJson.lat} Lon:${weatherJson.lon}`
+		name: weatherJson.sys.country
+			? `${weatherJson.name}, ${weatherJson.sys.country}`
+			: weatherJson.name,
+		posname: `Lat:${weatherJson.lat} Lon:${weatherJson.lon}`
 	};
 	setLocationObject(currentLoc, myCoordsObj); */
 
