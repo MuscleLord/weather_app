@@ -18,6 +18,17 @@ export const getHomeLocation = () => {
 	return localStorage.getItem("defaultWeatherLocation");
 };
 
+export const getCityNameFromCoords = async (lat, lon) => {
+	const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=sv`;
+	try {
+		const response = await fetch(url);
+		const cityJson = await response.json();
+		return cityJson;
+	} catch (err) {
+		console.log(err.stack);
+	}
+};
+
 export const getWeatherFromCoords = async (locationObj) => {
 	/* 	const lat = locationObj.getLat();
 	const lon = locationObj.getLon();
