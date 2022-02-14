@@ -18,14 +18,20 @@ export const getHomeLocation = () => {
 	return localStorage.getItem("defaultWeatherLocation");
 };
 
-export const getCityNameFromCoords = async (lat, lon) => {
-	const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=sv`;
+export const getCityNameFromCoords = async (locationObj) => {
+	const urlDataObj = {
+		lat: locationObj.getLat(),
+		lon: locationObj.getLon()
+	};
 	try {
-		const response = await fetch(url);
-		const cityJson = await response.json();
-		return cityJson;
+		const weatherStream = await fetch("./.netlify/functions/get_city", {
+			method: "POST",
+			body: JSON.stringify(urlDataObj)
+		});
+		const weatherJson = await weatherStream.json();
+		return weatherJson;
 	} catch (err) {
-		console.log(err.stack);
+		console.error(err.stack);
 	}
 };
 
