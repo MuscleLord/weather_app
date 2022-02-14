@@ -221,14 +221,14 @@ const updateDataAndDisplay = async (locationObj) => {
 	//	updateWeatherLocationHeader(locationObj._name);
 	const weatherJson = await getWeatherFromCoords(locationObj);
 
-	const cityNameJson = await getCityNameFromCoords(
+	/* 	const cityNameJson = await getCityNameFromCoords(
 		weatherJson.lat,
 		weatherJson.lon
-	);
+	); */
 	//console.log(weatherJson);
 	//this is instead of browser location
 
-	const myCoordsObj = {
+	/* 	const myCoordsObj = {
 		lat: weatherJson.lat,
 		lon: weatherJson.lon,
 		name: cityNameJson.locality
@@ -238,7 +238,7 @@ const updateDataAndDisplay = async (locationObj) => {
 			: weatherJson.name,
 		posname: `Lat:${weatherJson.lat} Lon:${weatherJson.lon}`
 	};
-	setLocationObject(currentLoc, myCoordsObj);
+	setLocationObject(currentLoc, myCoordsObj); */
 
 	if (weatherJson) updateDisplay(weatherJson, locationObj);
 };
