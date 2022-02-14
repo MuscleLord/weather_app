@@ -217,18 +217,18 @@ const submitNewLocation = async (event) => {
 };
 
 const updateDataAndDisplay = async (locationObj) => {
-	//console.log(locationObj);
-	//	updateWeatherLocationHeader(locationObj._name);
 	const weatherJson = await getWeatherFromCoords(locationObj);
 
 	const cityNameJson = await getCityNameFromCoords(locationObj);
-	//console.log(weatherJson);
-	//this is instead of browser location
-	console.log(cityNameJson.address.village);
+
 	const myCoordsObj = {
 		lat: weatherJson.lat,
 		lon: weatherJson.lon,
-		name: cityNameJson.address.village,
+		name: cityNameJson.address.town
+			? cityNameJson.address.town
+			: cityNameJson.address.village
+			? cityNameJson.address.village
+			: cityNameJson.address.hamlet,
 		posname: `Lat:${weatherJson.lat} Lon:${weatherJson.lon}`
 	};
 	setLocationObject(currentLoc, myCoordsObj);
