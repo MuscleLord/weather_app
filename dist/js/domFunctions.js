@@ -304,6 +304,7 @@ const displayCurrentConditions = (currentConditionsArray) => {
 };
 
 const displaySixDayForecast = (weatherJson) => {
+	if (!weatherJson.daily) return;
 	for (let i = 1; i <= 6; i++) {
 		const dfArray = creatDailyForecastDivs(weatherJson.daily[i]);
 		displayDailyForecast(dfArray);
