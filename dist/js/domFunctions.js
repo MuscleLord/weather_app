@@ -202,7 +202,7 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 	const humidity = createElem(
 		"div",
 		"humidity",
-		`Fuktighet ${currentWeather.humidity}%`
+		`Fuktighet ${currentWeather.main.humidity}%`
 	);
 	const wind = createElem(
 		"div",
