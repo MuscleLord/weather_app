@@ -228,6 +228,8 @@ const updateDataAndDisplay = async (locationObj) => {
 			? cityNameJson.address.town
 			: cityNameJson.address.village
 			? cityNameJson.address.village
+			: cityNameJson.address.city
+			? cityNameJson.address.city
 			: cityNameJson.address.hamlet,
 		posname: `Lat:${weatherJson.coord.lat} Lon:${weatherJson.coord.lon}`
 	};
