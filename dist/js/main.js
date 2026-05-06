@@ -222,14 +222,14 @@ const updateDataAndDisplay = async (locationObj) => {
 	const cityNameJson = await getCityNameFromCoords(locationObj);
 	console.log("CITYNAME: ",cityNameJson)
 	const myCoordsObj = {
-		lat: weatherJson.lat,
-		lon: weatherJson.lon,
+		lat: weatherJson.coord.lat,
+		lon: weatherJson.coord.lon,
 		name: cityNameJson.address.town
 			? cityNameJson.address.town
 			: cityNameJson.address.village
 			? cityNameJson.address.village
 			: cityNameJson.address.hamlet,
-		posname: `Lat:${weatherJson.lat} Lon:${weatherJson.lon}`
+		posname: `Lat:${weatherJson.coord.lat} Lon:${weatherJson.coord.lon}`
 	};
 	setLocationObject(currentLoc, myCoordsObj);
 
