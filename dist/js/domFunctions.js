@@ -156,7 +156,7 @@ const buildScreenReaderWeather = (weatherJson, locationObj) => {
 	const location = locationObj.getName();
 	const unit = locationObj.getUnit();
 	const tempUnit = unit === "imperial" ? "F" : "C";
-	return `${weatherJson.current.weather[0].description} and ${roundNum(
+	return `${weatherJson.weather[0].description} and ${roundNum(
 		weatherJson.current.temp
 	)}°${tempUnit} in ${location}`;
 };
