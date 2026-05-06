@@ -305,10 +305,11 @@ const displayCurrentConditions = (currentConditionsArray) => {
 
 const displaySixDayForecast = (weatherJson) => {
 	if (!weatherJson.list) return;
-	console.log(weatherJson.list)
-	console.log(weatherJson.list[1].dt_txt.includes("12:00:00"))
+	console.log(weatherJson.list.lenght)
+	console.log(weatherJson.list[1].dt_txt)
 	for (let i = 1; i <= weatherJson.list.length; i++) {
-		if(weatherJson.list[i].dt_txt.includes("12:00:00")){
+		let temp = "" + weatherJson.list[i].dt_txt
+		if(temp.includes("12:00:00")){
 			const dfArray = creatDailyForecastDivs(weatherJson.list[i]);
 			displayDailyForecast(dfArray);
 		}
