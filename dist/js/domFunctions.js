@@ -74,7 +74,7 @@ export const updateDisplay = (weatherJson, locationObj) => {
 	fadeDisplay();
 	clearDisplay();
 
-	const weatherClass = getWeatherClass(weatherJson.weather[0].icon);
+	const weatherClass = getWeatherClass(weatherJson.list[0].weather[0].icon);
 	setBGImage(weatherClass);
 	const screenReaderWeather = buildScreenReaderWeather(
 		weatherJson,
@@ -156,8 +156,8 @@ const buildScreenReaderWeather = (weatherJson, locationObj) => {
 	const location = locationObj.getName();
 	const unit = locationObj.getUnit();
 	const tempUnit = unit === "imperial" ? "F" : "C";
-	return `${weatherJson.weather[0].description} and ${roundNum(
-		weatherJson.main.temp
+	return `${weatherJson.list[0].weather[0].description} and ${roundNum(
+		weatherJson.list[0].main.temp
 	)}°${tempUnit} in ${location}`;
 };
 
@@ -167,8 +167,8 @@ const setFocusOnSearch = () => {
 
 const createCurrentConditionsDivs = (weatherObj, unit) => {
 	const currentWeather = weatherObj;
-	const cDailyWeather = weatherObj.main;
-	const cInfo = currentWeather.weather[0];
+	const cDailyWeather = weatherObj.list[0].main;
+	const cInfo = currentWeather.list[0].weather[0];
 	const tempUnit = unit === "imperial" ? "F" : "C";
 	const windUnit = unit === "imperial" ? "mph" : "m/s";
 	const icon = createMainImgDiv(cInfo.icon, cInfo.description);
@@ -177,8 +177,8 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 		"temp",
 		`${
 			unit === "imperial"
-				? roundNum(currentWeather.main.temp)
-				: roundNum(currentWeather.main.temp * 10) / 10
+				? roundNum(currentWeather.list[0].main.temp)
+				: roundNum(currentWeather.list[0].main.temp * 10) / 10
 		}°`,
 		tempUnit
 	);
@@ -187,7 +187,7 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 	const feels = createElem(
 		"div",
 		"feels",
-		`Känsla ${roundNum(currentWeather.main.feels_like)}°`
+		`Känsla ${roundNum(currentWeather.list[0].main.feels_like)}°`
 	);
 	const maxTemp = createElem(
 		"div",
@@ -202,17 +202,17 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 	const humidity = createElem(
 		"div",
 		"humidity",
-		`Fuktighet ${currentWeather.main.humidity}%`
+		`Fuktighet ${currentWeather.list[0].main.humidity}%`
 	);
 	const wind = createElem(
 		"div",
 		"wind",
-		`Vind ${currentWeather.wind.speed} ${windUnit}`
+		`Vind ${currentWeather.list[0].wind.speed} ${windUnit}`
 	);
 
 	//make sure the temp fontsize make room for more characters when its cold
 	if (
-		`${roundNum(currentWeather.main.temp * 10) / 10}`.length >= 4 &&
+		`${roundNum(currentWeather.list[0].main.temp * 10) / 10}`.length >= 4 &&
 		unit === "metric"
 	) {
 		temp.style.fontSize = "5.6rem";
@@ -304,9 +304,9 @@ const displayCurrentConditions = (currentConditionsArray) => {
 };
 
 const displaySixDayForecast = (weatherJson) => {
-	if (!weatherJson.daily) return;
+	if (!weatherJson.list) return;
 	for (let i = 1; i <= 6; i++) {
-		const dfArray = creatDailyForecastDivs(weatherJson.daily[i]);
+		const dfArray = creatDailyForecastDivs(weatherJson.list[i]);
 		displayDailyForecast(dfArray);
 	}
 };
