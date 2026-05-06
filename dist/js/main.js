@@ -82,7 +82,7 @@ const geoSuccess = (position) => {
 		posname: `Lat:${position.coords.latitude} Lon:${position.coords.longitude}`
 	};
 	setLocationObject(currentLoc, myCoordsObj);
-	//console.log(currentLoc);
+	console.log(currentLoc);
 	//update data and display
 	updateDataAndDisplay(currentLoc);
 };
@@ -218,9 +218,9 @@ const submitNewLocation = async (event) => {
 
 const updateDataAndDisplay = async (locationObj) => {
 	const weatherJson = await getWeatherFromCoords(locationObj);
-
+	console.log("WEATHER: ",weatherJson)
 	const cityNameJson = await getCityNameFromCoords(locationObj);
-
+	console.log("CITYNAME: ",cityNameJson)
 	const myCoordsObj = {
 		lat: weatherJson.lat,
 		lon: weatherJson.lon,
