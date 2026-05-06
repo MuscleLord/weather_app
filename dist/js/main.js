@@ -217,21 +217,30 @@ const submitNewLocation = async (event) => {
 };
 
 const updateDataAndDisplay = async (locationObj) => {
+	
 	const weatherJson = await getWeatherFromCoords(locationObj);
 	console.log("WEATHER: ",weatherJson)
 	const cityNameJson = await getCityNameFromCoords(locationObj);
 	console.log("CITYNAME: ",cityNameJson)
-	const myCoordsObj = {
-		lat: weatherJson.coord.lat,
-		lon: weatherJson.coord.lon,
-		name: cityNameJson.address.town
+
+	const placeName = cityNameJson.address.town
 			? cityNameJson.address.town
 			: cityNameJson.address.village
 			? cityNameJson.address.village
 			: cityNameJson.address.city
 			? cityNameJson.address.city
-			: cityNameJson.address.hamlet,
-		posname: `Lat:${weatherJson.coord.lat} Lon:${weatherJson.coord.lon}`
+			: cityNameJson.address.hamlet;
+	
+	const coordsData = await getCoordsFromApi(
+		placeName,
+		currentLoc.getUnit() ?? "meter",
+		currentLoc.getLang() ?? "sv"
+	);
+	const myCoordsObj = {
+		lat: coordsData.coord.lat,
+		lon: coordsData.coord.lon,
+		name: placeName,
+		posname: `Lat:${coordsData.coord.lat} Lon:${coordsData.coord.lon}`
 	};
 	setLocationObject(currentLoc, myCoordsObj);
 
