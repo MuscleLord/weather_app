@@ -157,7 +157,7 @@ const buildScreenReaderWeather = (weatherJson, locationObj) => {
 	const unit = locationObj.getUnit();
 	const tempUnit = unit === "imperial" ? "F" : "C";
 	return `${weatherJson.weather[0].description} and ${roundNum(
-		weatherJson.current.temp
+		weatherJson.main.temp
 	)}°${tempUnit} in ${location}`;
 };
 
@@ -166,8 +166,8 @@ const setFocusOnSearch = () => {
 };
 
 const createCurrentConditionsDivs = (weatherObj, unit) => {
-	const currentWeather = weatherObj.current;
-	const cDailyWeather = weatherObj.daily[0];
+	const currentWeather = weatherObj;
+	const cDailyWeather = weatherObj.main;
 	const cInfo = currentWeather.weather[0];
 	const tempUnit = unit === "imperial" ? "F" : "C";
 	const windUnit = unit === "imperial" ? "mph" : "m/s";
@@ -177,8 +177,8 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 		"temp",
 		`${
 			unit === "imperial"
-				? roundNum(currentWeather.temp)
-				: roundNum(currentWeather.temp * 10) / 10
+				? roundNum(currentWeather.main.temp)
+				: roundNum(currentWeather.main.temp * 10) / 10
 		}°`,
 		tempUnit
 	);
@@ -187,17 +187,17 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 	const feels = createElem(
 		"div",
 		"feels",
-		`Känsla ${roundNum(currentWeather.feels_like)}°`
+		`Känsla ${roundNum(currentWeather.main.feels_like)}°`
 	);
 	const maxTemp = createElem(
 		"div",
 		"maxtemp",
-		`H ${roundNum(cDailyWeather.temp.max)}°`
+		`H ${roundNum(cDailyWeather.temp_max)}°`
 	);
 	const minTemp = createElem(
 		"div",
 		"mintemp",
-		`L ${roundNum(cDailyWeather.temp.min)}°`
+		`L ${roundNum(cDailyWeather.temp_min)}°`
 	);
 	const humidity = createElem(
 		"div",
@@ -207,12 +207,12 @@ const createCurrentConditionsDivs = (weatherObj, unit) => {
 	const wind = createElem(
 		"div",
 		"wind",
-		`Vind ${currentWeather.wind_speed} ${windUnit}`
+		`Vind ${currentWeather.wind.speed} ${windUnit}`
 	);
 
 	//make sure the temp fontsize make room for more characters when its cold
 	if (
-		`${roundNum(currentWeather.temp * 10) / 10}`.length >= 4 &&
+		`${roundNum(currentWeather.main.temp * 10) / 10}`.length >= 4 &&
 		unit === "metric"
 	) {
 		temp.style.fontSize = "5.6rem";
@@ -322,12 +322,12 @@ const creatDailyForecastDivs = (dayWeather) => {
 	const dayHigh = createElem(
 		"p",
 		"dayHigh",
-		`H ${roundNum(dayWeather.temp.max)}°`
+		`H ${roundNum(dayWeather.main.temp_max)}°`
 	);
 	const dayLow = createElem(
 		"p",
 		"dayLow",
-		`L ${roundNum(dayWeather.temp.min)}°`
+		`L ${roundNum(dayWeather.main.temp_min)}°`
 	);
 	return [dayAbbreviation, dayIcon, dayHigh, dayLow];
 };
