@@ -307,7 +307,7 @@ const displaySixDayForecast = (weatherJson) => {
 	if (!weatherJson.list) return;
 	console.log(weatherJson.list.length)
 	
-	for (let i = 1; i <= weatherJson.list.length; i++) {
+	for (let i = 1; i <= weatherJson.list.length-1; i++) {
 		let temp = "" + weatherJson.list[i].dt_txt
 		console.log(weatherJson.list[i].dt_txt)
 		if(temp.includes("12:00:00")){
