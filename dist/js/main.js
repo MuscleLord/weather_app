@@ -231,16 +231,14 @@ const updateDataAndDisplay = async (locationObj) => {
 			? cityNameJson.address.city
 			: cityNameJson.address.hamlet;
 	
-	const coordsData = await getCoordsFromApi(
-		placeName,
-		currentLoc.getUnit() ?? "meter",
-		currentLoc.getLang() ?? "sv"
-	);
+	const latitud = weatherJson.city.coord.lat;
+	const longitud = weatherJson.city.coord.lon;
+	
 	const myCoordsObj = {
-		lat: coordsData.coord.lat,
-		lon: coordsData.coord.lon,
+		lat: latitude,
+		lon: longitud,
 		name: placeName,
-		posname: `Lat:${coordsData.coord.lat} Lon:${coordsData.coord.lon}`
+		posname: `Lat:${latitud} Lon:${longitud}`
 	};
 	setLocationObject(currentLoc, myCoordsObj);
 
