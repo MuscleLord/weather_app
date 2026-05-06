@@ -235,7 +235,7 @@ const updateDataAndDisplay = async (locationObj) => {
 	const longitud = weatherJson.city.coord.lon;
 	
 	const myCoordsObj = {
-		lat: latitude,
+		lat: latitud,
 		lon: longitud,
 		name: placeName,
 		posname: `Lat:${latitud} Lon:${longitud}`
